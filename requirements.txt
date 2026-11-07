@@ -5,3 +5,4 @@ langgraph
 streamlit
 langchain-ollama
 python-dotenv
+pypdf
