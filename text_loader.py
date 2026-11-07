@@ -6,12 +6,24 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-model
+model = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0
+)
 
 loader = TextLoader('cricket.txt', encoding='utf-8')
-
 docs = loader.load()
 
-# print(docs)
-# print(len(docs))
-print(docs[0])
+prompt = PromptTemplate(
+    template="Summarize the following document in simple language:\n\n{text}",
+    input_variables=["text"]
+)
+
+chain = prompt | model | StrOutputParser()
+
+document_text = docs[0].page_content
+                          
+summary = chain.invoke({"text": document_text})
+
+print("Document Summary:")
+print(summary)
